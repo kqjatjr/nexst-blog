@@ -6,7 +6,6 @@ import { Pdf } from "react-notion-x/build/third-party/pdf";
 import styles from "../styles/Home.module.css";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
-import { getPost } from "../lib/notion";
 
 type TProps = {
   query: {
@@ -17,8 +16,6 @@ type TProps = {
 export async function getServerSideProps({ query }: TProps) {
   const notion = new NotionAPI();
   const postId = query.id;
-  const title = await getPost(postId);
-  console.log(title);
   const recordMap = await notion.getPage(postId);
 
   return {
@@ -31,9 +28,10 @@ export async function getServerSideProps({ query }: TProps) {
 const Post = ({ posts }: any) => {
   return (
     <div className={styles.blogPageHolder}>
-      <div></div>
       <NotionRenderer
         recordMap={posts}
+        // disableHeader={true}
+        fullPage
         components={{
           Code,
           Collection,

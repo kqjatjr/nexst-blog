@@ -5,10 +5,10 @@ const client = new Client({
 });
 
 async function getPosts() {
-  const myPosts = await client.databases.query({
+  const posts = await client.databases.query({
     database_id: `${process.env.NOTION_DATABASE}`,
   });
-  return myPosts;
+  return posts;
 }
 
 async function getDatabase() {
@@ -19,18 +19,26 @@ async function getDatabase() {
   return database;
 }
 
+async function getUser(id: string) {
+  const user = await client.users.retrieve({
+    user_id: id,
+  });
+
+  return user;
+}
+
 async function getPost(id: string) {
-  const myPost = await client.pages.retrieve({
+  const post = await client.pages.retrieve({
     page_id: id,
   });
-  return myPost;
+  return post;
 }
 
 async function getBlocks(id: string) {
-  const myBlocks = await client.blocks.children.list({
+  const blocks = await client.blocks.children.list({
     block_id: id,
   });
-  return myBlocks;
+  return blocks;
 }
 
-export { getPosts, getPost, getBlocks, getDatabase };
+export { getPosts, getPost, getBlocks, getDatabase, getUser };
