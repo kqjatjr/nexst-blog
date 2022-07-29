@@ -1,10 +1,10 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { posts } from "../lib/notion";
+import { getPosts } from "../lib/notion";
 
 export async function getServerSideProps() {
-  let { results } = await posts();
+  let { results } = await getPosts();
 
   return {
     props: {
@@ -19,6 +19,7 @@ interface Props {
 }
 
 const Home = (props: Props) => {
+  console.log(props);
   return (
     <div className={styles.container}>
       <Head>
@@ -26,7 +27,7 @@ const Home = (props: Props) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>살자</h1>
+        <h1 className={styles.title}>RSUPPORT</h1>
         {props.posts.map((result, index) => {
           return (
             <div className={styles.cardHolder} key={index}>
@@ -42,9 +43,7 @@ const Home = (props: Props) => {
         })}
       </main>
 
-      <footer className={styles.footer}>
-        <p>Blog application</p>
-      </footer>
+      <footer className={styles.footer}></footer>
     </div>
   );
 };
