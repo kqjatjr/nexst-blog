@@ -27,11 +27,10 @@ export async function getServerSideProps({ query }: TProps) {
 
 const Post = ({ posts }: any) => {
   return (
-    <div className={styles.blogPageHolder}>
+    <div>
       <NotionRenderer
         recordMap={posts}
-        // disableHeader={true}
-        fullPage
+        fullPage={true}
         components={{
           Code,
           Collection,

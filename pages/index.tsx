@@ -1,65 +1,47 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
-import { getPosts } from "../lib/notion";
+import { getPost, getPosts } from "../lib/notion";
 import Image from "next/image";
+import { NotionRenderer } from "react-notion-x";
+import { NotionAPI } from "notion-client";
+import { Code } from "react-notion-x/build/third-party/code";
+import { Collection } from "react-notion-x/build/third-party/collection";
+import { Equation } from "react-notion-x/build/third-party/equation";
+import { Modal } from "react-notion-x/build/third-party/modal";
+import { Pdf } from "react-notion-x/build/third-party/pdf";
 
 export async function getServerSideProps() {
-  let { results } = await getPosts();
+  // let { results } = await getPosts();
+  const notion = new NotionAPI();
+  const rootID = "024b5d9706114ad3843dcc7920b6b213";
+  const recordMap = await notion.getPage(rootID);
 
   return {
     props: {
-      posts: results,
+      test: recordMap,
     },
   };
 }
 
 interface Props {
-  posts: [any];
+  test: any;
 }
 
-const Home = ({ posts }: Props) => {
-  const sortResult = posts.sort(
-    (a, b) =>
-      a.properties.createDate.created_time -
-      b.properties.createDate.created_time,
-  );
-
-  console.log(posts, "!!!");
-  console.log(sortResult);
-
+const Home = ({ test }: Props) => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>RSUPPORT</title>
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>RSUPPORT</h1>
-        {posts.map((result, index) => {
-          return (
-            <div className={styles.cardHolder} key={index}>
-              <div className={styles.cardContent}>
-                {result.properties.thumbnail.files[0] && (
-                  <Image
-                    src={result.properties.thumbnail.files[0].file.url}
-                    alt="thumbnail"
-                    width={200}
-                    height={200}
-                  />
-                )}
-                <Link href={`/${result.id}`}>
-                  <a className={styles.cardTitle}>
-                    {result.properties.name?.title[0]?.plain_text}
-                  </a>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </main>
-
-      <footer className={styles.footer}></footer>
+    <div>
+      <NotionRenderer
+        recordMap={test}
+        fullPage={true}
+        components={{
+          Code,
+          Collection,
+          Equation,
+          Modal,
+          Pdf,
+        }}
+      />
     </div>
   );
 };
