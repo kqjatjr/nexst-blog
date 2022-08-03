@@ -59,7 +59,7 @@ const Home = ({ posts }: Props) => {
         })}
       </main>
 
-      <footer className={styles.footer}></footer>
+      <footer className={styles.footer}>ㅇㅇ</footer>
     </div>
   );
 };
