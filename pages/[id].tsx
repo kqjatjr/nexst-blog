@@ -30,8 +30,6 @@ const Post = ({ posts }: any) => {
     <div className={styles.blogPageHolder}>
       <NotionRenderer
         recordMap={posts}
-        // disableHeader={true}
-        fullPage
         components={{
           Code,
           Collection,

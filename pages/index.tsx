@@ -2,7 +2,9 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import { getPosts } from "../lib/notion";
-import Image from "next/image";
+import Container from "../components/Container";
+import PostList from "../components/PostList";
+import Layout from "../components/Layout";
 
 export async function getServerSideProps() {
   let { results } = await getPosts();
@@ -19,48 +21,31 @@ interface Props {
 }
 
 const Home = ({ posts }: Props) => {
-  const sortResult = posts.sort(
-    (a, b) =>
-      a.properties.createDate.created_time -
-      b.properties.createDate.created_time,
-  );
-
-  console.log(posts, "!!!");
-  console.log(sortResult);
-
+  console.log(posts);
   return (
-    <div className={styles.container}>
+    <Layout>
       <Head>
         <title>RSUPPORT</title>
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>RSUPPORT</h1>
-        {posts.map((result, index) => {
-          return (
-            <div className={styles.cardHolder} key={index}>
-              <div className={styles.cardContent}>
-                {result.properties.thumbnail.files[0] && (
-                  <Image
-                    src={result.properties.thumbnail.files[0].file.url}
-                    alt="thumbnail"
-                    width={200}
-                    height={200}
-                  />
-                )}
-                <Link href={`/${result.id}`}>
-                  <a className={styles.cardTitle}>
-                    {result.properties.name?.title[0]?.plain_text}
-                  </a>
-                </Link>
-              </div>
-            </div>
-          );
-        })}
-      </main>
-
-      <footer className={styles.footer}>ㅇㅇ</footer>
-    </div>
+      <Container>
+        <div className="grid gap-10 lg:gap-10 md:grid-cols-2 ">
+          {posts.slice(0, 2).map((post) => (
+            <PostList
+              key={post.id}
+              post={post}
+              aspect="landscape"
+              preloadImage={true}
+            />
+          ))}
+        </div>
+        <div className="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3 ">
+          {posts.slice(2).map((post) => (
+            <PostList key={post.id} post={post} aspect="square" />
+          ))}
+        </div>
+      </Container>
+    </Layout>
   );
 };
 
