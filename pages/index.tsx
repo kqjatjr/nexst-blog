@@ -5,6 +5,7 @@ import { getPosts } from "../lib/notion";
 import Container from "../components/Container";
 import PostList from "../components/PostList";
 import Layout from "../components/Layout";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   let { results } = await getPosts();
@@ -21,7 +22,8 @@ interface Props {
 }
 
 const Home = ({ posts }: Props) => {
-  console.log(posts);
+  const [postList, setPostList] = useState<any[]>(posts);
+
   return (
     <Layout>
       <Head>

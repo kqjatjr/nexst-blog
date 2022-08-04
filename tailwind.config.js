@@ -8,14 +8,13 @@ module.exports = {
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: "class",
   theme: {
     extend: {
       colors: {
         gray: colors.neutral,
       },
       fontFamily: {
-        // to change, update font in _document.js
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         stock: [defaultTheme.fontFamily.sans],
       },
