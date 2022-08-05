@@ -1,28 +1,48 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import Link from "next/link";
 import { getPosts } from "../lib/notion";
 import Container from "../components/Container";
 import PostList from "../components/PostList";
+import { ChangeEvent, useEffect, useState } from "react";
+import NavBar from "../components/NavBar";
 import Layout from "../components/Layout";
-import { useState } from "react";
 
 export async function getServerSideProps() {
-  let { results } = await getPosts();
+  let { results }: { results: any[] } = await getPosts();
+
+  const done = results.filter(
+    (post) => post.properties.status.status?.name === "Done",
+  );
 
   return {
     props: {
-      posts: results,
+      posts: done,
     },
   };
 }
 
 interface Props {
-  posts: [any];
+  posts: any[];
 }
 
 const Home = ({ posts }: Props) => {
-  const [postList, setPostList] = useState<any[]>(posts);
+  console.log(posts);
+  const [postList, setPostList] = useState(posts);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleClickSearchBtn = () => {
+    if (inputValue.trim().length === 0) {
+      setPostList(posts);
+    } else {
+      const filterPost = posts.filter((post) =>
+        post.properties.name.title[0].plain_text.includes(inputValue.trim()),
+      );
+      setPostList(filterPost);
+    }
+  };
 
   return (
     <Layout>
@@ -30,9 +50,16 @@ const Home = ({ posts }: Props) => {
         <title>RSUPPORT</title>
       </Head>
 
+      <NavBar
+        value={inputValue}
+        placeholder="검색어를 입력해 주세요"
+        onChangeInputValue={handleChangeInputValue}
+        onClickSearchBtn={handleClickSearchBtn}
+      />
+
       <Container>
         <div className="grid gap-10 lg:gap-10 md:grid-cols-2 ">
-          {posts.slice(0, 2).map((post) => (
+          {postList.slice(0, 2).map((post) => (
             <PostList
               key={post.id}
               post={post}
@@ -42,7 +69,7 @@ const Home = ({ posts }: Props) => {
           ))}
         </div>
         <div className="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-3 ">
-          {posts.slice(2).map((post) => (
+          {postList.slice(2).map((post) => (
             <PostList key={post.id} post={post} aspect="square" />
           ))}
         </div>

@@ -11,9 +11,6 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
-      colors: {
-        gray: colors.neutral,
-      },
       fontFamily: {
         sans: ["Inter", ...defaultTheme.fontFamily.sans],
         stock: [defaultTheme.fontFamily.sans],
@@ -32,5 +29,6 @@ module.exports = {
   plugins: [
     require("@tailwindcss/line-clamp"),
     require("@tailwindcss/typography"),
+    require("daisyui"),
   ],
 };

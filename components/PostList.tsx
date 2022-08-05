@@ -15,7 +15,6 @@ export default function PostList({ post, aspect }: TPorps) {
     ? post.cover.external.url
     : post.cover?.file.url;
 
-  console.log(post);
   return (
     <>
       <div className="cursor-pointer">

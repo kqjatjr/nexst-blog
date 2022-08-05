@@ -6,6 +6,8 @@ import { Pdf } from "react-notion-x/build/third-party/pdf";
 import styles from "../styles/Home.module.css";
 import { NotionAPI } from "notion-client";
 import { NotionRenderer } from "react-notion-x";
+import Container from "../components/Container";
+import NavBar from "../components/NavBar";
 
 type TProps = {
   query: {
@@ -27,7 +29,7 @@ export async function getServerSideProps({ query }: TProps) {
 
 const Post = ({ posts }: any) => {
   return (
-    <div className={styles.blogPageHolder}>
+    <Container>
       <NotionRenderer
         recordMap={posts}
         components={{
@@ -38,7 +40,7 @@ const Post = ({ posts }: any) => {
           Pdf,
         }}
       />
-    </div>
+    </Container>
   );
 };
 

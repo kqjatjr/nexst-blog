@@ -1,14 +1,16 @@
 import Head from "next/head";
+import Container from "./Container";
+import Footer from "./Footer";
 import NavBar from "./NavBar";
 
 const Layout = (props: any) => {
   return (
     <>
       <div>
-        <NavBar />
+        {/* <NavBar /> */}
         <div>{props.children}</div>
 
-        <div />
+        <Footer />
       </div>
     </>
   );
