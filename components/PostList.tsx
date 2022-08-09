@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import Link from "next/link";
 import { cx } from "./Container";
+import Tag from "./Tag";
 
 type TPorps = {
   post: any;
@@ -14,6 +15,14 @@ export default function PostList({ post, aspect }: TPorps) {
   const thumbnail = post.cover?.external
     ? post.cover.external.url
     : post.cover?.file.url;
+
+  if (!post.properties.tag.select) {
+    post.properties.tag.select = {
+      id: "defalt",
+      name: "ALL",
+      color: "default",
+    };
+  }
 
   return (
     <>
@@ -49,7 +58,7 @@ export default function PostList({ post, aspect }: TPorps) {
             />
           )}
         </div>
-
+        <Tag tag={post.properties.tag.select} />
         <h2 className="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
           <span
             className="bg-gradient-to-r from-green-200 to-green-100 dark:from-purple-800 dark:to-purple-900
