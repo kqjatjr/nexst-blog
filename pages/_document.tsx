@@ -9,7 +9,7 @@ const Document = () => {
         <meta name="keywords" content="nextjs,static,website" />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap"
-          rel="stylesheet"
+          rel="stylesheet "
         />
       </Head>
       <body>
