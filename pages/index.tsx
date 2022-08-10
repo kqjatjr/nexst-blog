@@ -2,9 +2,10 @@ import Head from "next/head";
 import { getPosts } from "../lib/notion";
 import Container from "../components/Container";
 import PostList from "../components/PostList";
-import React, { ChangeEvent, useState, KeyboardEvent } from "react";
+import React, { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Layout from "../components/Layout";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   let { results }: { results: any[] } = await getPosts();
@@ -28,6 +29,14 @@ const Home = ({ posts }: Props) => {
   console.log(posts);
   const [postList, setPostList] = useState(posts || []);
   const [inputValue, setInputValue] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    const scroll = sessionStorage.getItem("scroll");
+    if (scroll) {
+      window.scrollTo(0, Number(scroll));
+    }
+  }, []);
 
   const handleChangeInputValue = (event: ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -47,10 +56,10 @@ const Home = ({ posts }: Props) => {
           const curTitle =
             post.properties.name.title[0].plain_text.toUpperCase();
           const target = inputValue.trim().toUpperCase();
-
           return curTitle.includes(target);
         });
         setPostList(filterPost);
+        setKeyword(inputValue);
       }
     }
   };
@@ -89,10 +98,10 @@ const Home = ({ posts }: Props) => {
             </div>
           </div>
         ) : (
-          <div className="min-h-[70vh] flex justify-center align-middle">
+          <div className="min-h-[70vh] flex justify-center">
             <span className="m-auto text-xl">
-              <span className="font-bold text-red-500">{inputValue}</span>에
-              관한 검색결과가 없습니다.
+              <span className="font-bold text-red-500">{keyword}</span>에 관한
+              검색결과가 없습니다.
             </span>
           </div>
         )}

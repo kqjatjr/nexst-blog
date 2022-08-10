@@ -1,7 +1,6 @@
-import Head from "next/head";
-import Container from "./Container";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import Footer from "./Footer";
-import NavBar from "./NavBar";
 
 const Layout = (props: any) => {
   return (

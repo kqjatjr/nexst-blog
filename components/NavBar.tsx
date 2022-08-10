@@ -22,7 +22,7 @@ const NavBar = ({
   const router = useRouter();
 
   return (
-    <Container className="navbar bg-base-100">
+    <Container className="navbar bg-base-100 h-[15vh] box-border">
       <div className="navbar-start">
         <div className="dropdown z-50 ">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">

@@ -11,6 +11,7 @@ async function getPosts() {
   return posts;
 }
 
+// 아래의 함수들은 추후 노션 api 관련 모든 글들의 컨포넌트가 완성된다면 사용
 async function getDatabase() {
   const database = await client.databases.retrieve({
     database_id: `${process.env.NOTION_DATABASE}`,

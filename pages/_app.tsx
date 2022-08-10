@@ -10,7 +10,7 @@ import { DefaultSeo } from "next-seo";
 const DEFAULT_SEO = {
   title: "RSUPPORT TECH BLOG",
   description: "알서포트 기술 블로그",
-  canonical: "https://www.carrotins.com",
+  canonical: "https://www.naver.com",
   openGraph: {
     type: "website",
     locale: "ko_KR",

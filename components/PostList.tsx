@@ -19,10 +19,14 @@ export default function PostList({ post, aspect }: TPorps) {
   if (!post.properties.tag.select) {
     post.properties.tag.select = {
       id: "defalt",
-      name: "ALL",
+      name: "ETC",
       color: "default",
     };
   }
+
+  const onSaveCurrentScroll = () => {
+    sessionStorage.setItem("scroll", String(window.scrollY));
+  };
 
   return (
     <>
@@ -33,30 +37,22 @@ export default function PostList({ post, aspect }: TPorps) {
             aspect === "landscape" ? "aspect-video" : "aspect-square",
           )}
         >
-          {post.cover ? (
-            <Link href={`/${post.id}`}>
-              <a>
-                <Image
-                  src={thumbnail}
-                  alt={"Thumbnail"}
-                  sizes="80vw"
-                  layout="fill"
-                  objectFit="cover"
-                  priority={true}
-                  className="transition-all"
-                />
-              </a>
-            </Link>
-          ) : (
-            <Image
-              src="https://www.rsupport.com/ko-kr/wp-content/uploads/sites/2/2015/11/rsupport.svg"
-              alt={"Thumbnail"}
-              sizes="80vw"
-              layout="fill"
-              priority={true}
-              className="transition-all"
-            />
-          )}
+          <Link href={`/posts/${post.id}`}>
+            <a onClick={onSaveCurrentScroll}>
+              <Image
+                src={
+                  thumbnail ||
+                  "https://www.rsupport.com/ko-kr/wp-content/uploads/sites/2/2015/11/rsupport.svg"
+                }
+                alt={"Thumbnail"}
+                sizes="80vw"
+                layout="fill"
+                objectFit={thumbnail ? "cover" : "contain"}
+                priority={true}
+                className="transition-all"
+              />
+            </a>
+          </Link>
         </div>
         <Tag tag={post.properties.tag.select} />
         <h2 className="mt-2 text-lg font-semibold tracking-normal text-brand-primary dark:text-white">
@@ -69,13 +65,15 @@ export default function PostList({ post, aspect }: TPorps) {
           duration-500
           hover:bg-[length:100%_10px] group-hover:bg-[length:100%_10px]"
           >
-            {post.properties.name.title[0] ? (
-              <Link href={`/${post.id}`} passHref>
-                {post.properties.name.title[0].plain_text}
-              </Link>
-            ) : (
-              "제목을 입력해 주세요"
-            )}
+            <Link href={`/posts/${post.id}`}>
+              {post.properties.name.title[0] ? (
+                <a onClick={onSaveCurrentScroll}>
+                  {post.properties.name.title[0].plain_text}
+                </a>
+              ) : (
+                <a>{"제목을 입력해 주세요"}</a>
+              )}
+            </Link>
           </span>
         </h2>
 
