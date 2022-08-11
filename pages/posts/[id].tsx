@@ -10,7 +10,6 @@ import { getPost } from "../../lib/notion";
 import dayjs from "dayjs";
 import Image from "next/image";
 import Layout from "../../components/Layout";
-import { BiArrowBack } from "react-icons/Bi";
 import NavBar from "../../components/NavBar";
 
 import Tag from "../../components/Tag";
@@ -47,9 +46,6 @@ export async function getServerSideProps({ query }: TProps) {
 }
 
 const Post = ({ posts, target }: any) => {
-  console.log(posts);
-  console.log(target);
-
   const createdTime = dayjs(target.created_time).format("YYYY년 MM월 DD일");
   const thumbnail = target.cover?.external
     ? target.cover.external.url
@@ -71,7 +67,6 @@ const Post = ({ posts, target }: any) => {
           <div className="max-w-screen-md mx-auto">
             <Link href="/" passHref>
               <button className="flex items-center hover:cursor-pointer">
-                <BiArrowBack />
                 <span>글 목록</span>
               </button>
             </Link>
