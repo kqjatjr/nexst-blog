@@ -1,4 +1,5 @@
 import Container from "./Container";
+import ThemeSwitch from "./ThemeSwitch";
 
 const Footer = () => {
   return (
@@ -6,6 +7,7 @@ const Footer = () => {
       <div>
         <p>Copyright © 2022 - RSUPPORT</p>
       </div>
+      <ThemeSwitch />
     </Container>
   );
 };

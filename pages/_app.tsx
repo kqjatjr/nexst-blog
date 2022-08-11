@@ -6,6 +6,7 @@ import "prismjs/themes/prism-tomorrow.css";
 import "katex/dist/katex.min.css";
 
 import { DefaultSeo } from "next-seo";
+import { ThemeProvider } from "next-themes";
 
 const DEFAULT_SEO = {
   title: "RSUPPORT TECH BLOG",
@@ -31,8 +32,10 @@ const DEFAULT_SEO = {
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <DefaultSeo {...DEFAULT_SEO} />
-      <Component {...pageProps} />
+      <ThemeProvider enableSystem={false}>
+        <DefaultSeo {...DEFAULT_SEO} />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 }

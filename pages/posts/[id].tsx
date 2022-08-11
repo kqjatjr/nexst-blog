@@ -14,6 +14,7 @@ import NavBar from "../../components/NavBar";
 
 import Tag from "../../components/Tag";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 
 type TProps = {
   query: {
@@ -47,6 +48,8 @@ export async function getServerSideProps({ query }: TProps) {
 
 const Post = ({ posts, target }: any) => {
   const createdTime = dayjs(target.created_time).format("YYYY년 MM월 DD일");
+  const { theme } = useTheme();
+  console.log(theme);
   const thumbnail = target.cover?.external
     ? target.cover.external.url
     : target.cover?.file.url;
@@ -148,6 +151,7 @@ const Post = ({ posts, target }: any) => {
           <NotionRenderer
             recordMap={posts}
             mapPageUrl={(id) => `/posts/${id}`}
+            darkMode={theme === "dark" && true}
             components={{
               Code,
               Collection,
