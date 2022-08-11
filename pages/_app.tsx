@@ -19,7 +19,7 @@ const DEFAULT_SEO = {
     site_name: "RSUPPORT TECH BLOG",
     images: [
       {
-        url: "https://www.rsupport.com/ko-kr/wp-content/uploads/sites/2/2015/11/rsupport.svg",
+        url: "https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.kym-cdn.com%2Fphotos%2Fimages%2Fnewsfeed%2F000%2F312%2F957%2F21c.jpg&type=sc960_832",
         width: 285,
         height: 167,
         alt: "썸네일 이미지",

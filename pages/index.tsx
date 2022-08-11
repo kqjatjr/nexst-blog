@@ -5,7 +5,6 @@ import PostList from "../components/PostList";
 import React, { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Layout from "../components/Layout";
-import { useRouter } from "next/router";
 
 export async function getServerSideProps() {
   let { results }: { results: any[] } = await getPosts();
@@ -26,7 +25,6 @@ interface Props {
 }
 
 const Home = ({ posts }: Props) => {
-  console.log(posts);
   const [postList, setPostList] = useState(posts || []);
   const [inputValue, setInputValue] = useState("");
   const [keyword, setKeyword] = useState("");
