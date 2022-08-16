@@ -5,6 +5,8 @@ import PostList from "../components/PostList";
 import React, { ChangeEvent, useState, KeyboardEvent, useEffect } from "react";
 import NavBar from "../components/NavBar";
 import Layout from "../components/Layout";
+import ListView from "./listView";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   let { results }: { results: any[] } = await getPosts();
@@ -28,6 +30,7 @@ const Home = ({ posts }: Props) => {
   const [postList, setPostList] = useState(posts || []);
   const [inputValue, setInputValue] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [viewStyle, setViewStyle] = useState("grid");
 
   useEffect(() => {
     const scroll = sessionStorage.getItem("scroll");
@@ -62,6 +65,8 @@ const Home = ({ posts }: Props) => {
     }
   };
 
+  console.log(posts);
+
   return (
     <Layout>
       <Head>
@@ -75,6 +80,12 @@ const Home = ({ posts }: Props) => {
         onKeyPressSesrchKey={handleKeyPressSesrchKey}
         onClickLogo={handleClickLogo}
       />
+
+      <div>
+        <Link href="/listView" passHref>
+          <button>뷰 전환</button>
+        </Link>
+      </div>
 
       <Container>
         {postList.length > 0 ? (

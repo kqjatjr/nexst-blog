@@ -49,7 +49,9 @@ export async function getServerSideProps({ query }: TProps) {
 const Post = ({ posts, target }: any) => {
   const createdTime = dayjs(target.created_time).format("YYYY년 MM월 DD일");
   const { theme } = useTheme();
+
   console.log(theme);
+
   const thumbnail = target.cover?.external
     ? target.cover.external.url
     : target.cover?.file.url;
@@ -150,8 +152,7 @@ const Post = ({ posts, target }: any) => {
         <div className="pb-10">
           <NotionRenderer
             recordMap={posts}
-            mapPageUrl={(id) => `/posts/${id}`}
-            darkMode={theme === "dark" && true}
+            darkMode={theme == "dark" && true}
             components={{
               Code,
               Collection,
