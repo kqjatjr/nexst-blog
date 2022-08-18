@@ -1,25 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, KeyboardEvent } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 import Container from "./Container";
+import ThemeSwitch from "./ThemeSwitch";
 
-type TProps = {
-  value?: string;
-  placeholder?: string;
-  onChangeInputValue?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickLogo?: () => void;
-  onKeyPressSesrchKey?: (e: KeyboardEvent<HTMLInputElement>) => void;
-};
-
-const NavBar = ({
-  value,
-  onChangeInputValue,
-  onKeyPressSesrchKey,
-  onClickLogo,
-  placeholder,
-}: TProps) => {
+const NavBar = () => {
+  const [value, setValue] = useState("");
   const router = useRouter();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const handlePressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/search?q=${value}`);
+    }
+  };
 
   return (
     <Container className="navbar bg-base-100 h-[15vh] box-border">
@@ -41,21 +39,18 @@ const NavBar = ({
               />
             </svg>
           </label>
-
           <ul
             tabIndex={0}
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-[100] "
           >
-            {router.pathname === "/" && (
-              <input
-                type="text"
-                placeholder={placeholder}
-                className="input"
-                value={value}
-                onChange={onChangeInputValue}
-                onKeyUp={onKeyPressSesrchKey}
-              />
-            )}
+            <input
+              type="text"
+              placeholder="검색어를 입력해주세요"
+              className="input"
+              value={value}
+              onChange={handleChange}
+              onKeyUp={handlePressEnter}
+            />
             <li tabIndex={0} className="w-[150px] ">
               <a className="justify-between">
                 자사 제품
@@ -86,20 +81,15 @@ const NavBar = ({
             </li>
           </ul>
         </div>
-        <Link href="/" passHref>
-          <div
-            className="btn btn-link relative w-[25vw] "
-            onClick={onClickLogo}
-          >
-            <a>
-              <Image
-                src="https://www.rsupport.com/ko-kr/wp-content/uploads/sites/2/2015/11/rsupport.svg"
-                alt={"Thumbnail"}
-                layout="fill"
-                objectFit="contain"
-              />
-            </a>
-          </div>
+        <Link href="/">
+          <a className="btn btn-link relative w-[25vw]">
+            <Image
+              src="https://www.rsupport.com/ko-kr/wp-content/uploads/sites/2/2015/11/rsupport.svg"
+              alt={"Thumbnail"}
+              layout="fill"
+              objectFit="contain"
+            />
+          </a>
         </Link>
       </div>
 
@@ -134,17 +124,16 @@ const NavBar = ({
             </ul>
           </li>
         </ul>
-        {router.pathname === "/" && (
-          <input
-            type="text"
-            placeholder={placeholder}
-            className="input"
-            value={value}
-            onChange={onChangeInputValue}
-            onKeyUp={onKeyPressSesrchKey}
-          />
-        )}
+        <input
+          type="text"
+          placeholder="검색어를 입력해주세요"
+          className="input"
+          value={value}
+          onChange={handleChange}
+          onKeyUp={handlePressEnter}
+        />
       </div>
+      <ThemeSwitch />
     </Container>
   );
 };

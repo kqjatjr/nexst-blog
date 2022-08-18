@@ -50,8 +50,6 @@ const Post = ({ posts, target }: any) => {
   const createdTime = dayjs(target.created_time).format("YYYY년 MM월 DD일");
   const { theme } = useTheme();
 
-  console.log(theme);
-
   const thumbnail = target.cover?.external
     ? target.cover.external.url
     : target.cover?.file.url;
@@ -59,14 +57,13 @@ const Post = ({ posts, target }: any) => {
   if (target.properties.tag && !target.properties.tag.select) {
     target.properties.tag.select = {
       id: "defalt",
-      name: "ETC",
+      name: "기타",
       color: "default",
     };
   }
 
   return (
     <Layout>
-      <NavBar />
       <div className="min-h-[80vh] pb-10">
         <Container className="!pt-0">
           <div className="max-w-screen-md mx-auto">
@@ -150,17 +147,19 @@ const Post = ({ posts, target }: any) => {
           )}
         </div>
         <div className="pb-10">
-          <NotionRenderer
-            recordMap={posts}
-            darkMode={theme == "dark" && true}
-            components={{
-              Code,
-              Collection,
-              Equation,
-              Modal,
-              Pdf,
-            }}
-          />
+          {theme && (
+            <NotionRenderer
+              recordMap={posts}
+              darkMode={theme == "dark" && true}
+              components={{
+                Code,
+                Collection,
+                Equation,
+                Modal,
+                Pdf,
+              }}
+            />
+          )}
         </div>
       </div>
     </Layout>

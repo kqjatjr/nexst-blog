@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Footer from "./Footer";
+import NavBar from "./NavBar";
 
 const Layout = (props: any) => {
   return (
     <>
       <div>
+        <NavBar />
         <div>{props.children}</div>
         <Footer />
       </div>
